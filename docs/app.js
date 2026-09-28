@@ -89,6 +89,19 @@
     }
   }
 
+  // Image paths in note markdown are relative to the note's own location
+  // inside notes/, but this page lives in docs/ — rewrite them to point
+  // at the real file under ../notes/.
+  function resolveImageSrcs(container, relPath) {
+    const noteDir = relPath.slice(0, relPath.lastIndexOf("/") + 1);
+    for (const img of container.querySelectorAll("img")) {
+      const src = img.getAttribute("src");
+      if (src && !/^([a-z][a-z0-9+.-]*:|\/)/i.test(src)) {
+        img.setAttribute("src", "../notes/" + noteDir + src);
+      }
+    }
+  }
+
   function loadFile(relPath) {
     const raw = window.NOTES_DATA.files[relPath];
     if (raw === undefined) {
@@ -96,6 +109,7 @@
       return;
     }
     docEl.innerHTML = marked.parse(raw);
+    resolveImageSrcs(docEl, relPath);
     setActiveLink(relPath);
     document.title =
       relPath.split("/").pop().replace(/\.md$/, "") + " — DevMind Notes";

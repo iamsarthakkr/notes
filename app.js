@@ -90,14 +90,14 @@
   }
 
   // Image paths in note markdown are relative to the note's own location
-  // inside notes/, but this page lives in docs/ — rewrite them to point
-  // at the real file under ../notes/.
+  // inside notes/, but this page renders them at the site root — rewrite
+  // them to point at the real file under notes/.
   function resolveImageSrcs(container, relPath) {
     const noteDir = relPath.slice(0, relPath.lastIndexOf("/") + 1);
     for (const img of container.querySelectorAll("img")) {
       const src = img.getAttribute("src");
       if (src && !/^([a-z][a-z0-9+.-]*:|\/)/i.test(src)) {
-        img.setAttribute("src", "../notes/" + noteDir + src);
+        img.setAttribute("src", "notes/" + noteDir + src);
       }
     }
   }

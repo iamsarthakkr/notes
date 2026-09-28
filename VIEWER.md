@@ -1,13 +1,13 @@
-# docs/
+# Notes viewer
 
-Generated static site for browsing `notes/`. Deployed via GitHub Pages
-("Deploy from a branch" → `main` → `/docs`).
+Static site for browsing `notes/`. Deployed via GitHub Pages from `main` /
+`(root)`, so the viewer files live at the repo root alongside `notes/`.
 
 - `index.html`, `app.js`, `style.css` — hand-written, the viewer itself.
 - `notes-data.js` — **generated, do not hand-edit.** Regenerate with:
 
   ```bash
-  node docs/generate-notes-data.js
+  node generate-notes-data.js
   ```
 
   Run this from the repo root any time `notes/` changes, then commit the
@@ -26,4 +26,4 @@ Reference them with a plain relative path in the markdown:
 ```
 
 `app.js` rewrites these note-relative paths to the real location under
-`../notes/` at render time, so no path changes are needed elsewhere.
+`notes/` at render time, so no path changes are needed elsewhere.
